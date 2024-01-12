@@ -8,7 +8,7 @@ import (
 
 func main() {
 	// Define new xs2a API client
-	client := xs2a.NewClient("https://xs2a.tech26.de/sandbox", "PSDDE-BAFIN-000001", "w6uP8Tcg6K2QR905Rms8iXTlksL6OD1KOWBxTK7wxPI", 60000)
+	client := xs2a.NewClient("https://xs2a.tech26.de/sandbox", "PSDDE-BAFIN-000001", "w6uP8Tcg6K2QR905Rms8iXTlksL6OD1KOWBxTK7wxPI", 6000000000)
 
 	// Authorize client
 	location, err := client.Authorize()

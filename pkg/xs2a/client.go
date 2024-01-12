@@ -33,11 +33,15 @@ func (c *Client) do(method, endpoint string, params map[string]string) (*http.Re
 	if err != nil {
 		return nil, err
 	}
+
 	// req.Header.Add("Content-Type", "application/json")
 	q := req.URL.Query()
 	for key, val := range params {
 		q.Set(key, val)
 	}
 	req.URL.RawQuery = q.Encode()
+
+	fmt.Println(req.URL.String())
+
 	return c.httpClient.Do(req)
 }

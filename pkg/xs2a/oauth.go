@@ -2,6 +2,7 @@ package xs2a
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -16,12 +17,14 @@ type (
 	}
 )
 
+// Authorize sends an authorization request to the XS2A API.
+// It returns a list of AuthorizationResponse and an error if any.
 func (c *Client) Authorize() (resp []AuthorizationResponse, err error) {
 	params := map[string]string{
 		"client_id":      c.clientId,
 		"scope":          "DEDICATED_AISP",
 		"code_challenge": c.codeChallenge,
-		"redirect_uri":   "http://localhost:8080/redirect",
+		"redirect_uri":   "https://tpp.com/redirect",
 		"response_type":  "CODE",
 		"state":          "1fL1nn7m9a",
 	}
@@ -36,6 +39,10 @@ func (c *Client) Authorize() (resp []AuthorizationResponse, err error) {
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		return resp, err
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return resp, fmt.Errorf("status: %s", res.Status)
 	}
 
 	if err = json.Unmarshal(body, &resp); err != nil {
